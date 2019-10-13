@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      中央事件管理器（bus）
+
+      能帮我们实现，兄弟组件、叔叔伯伯、七大姑八大姨组件直接的通信
+
+      希望在 world 中有个按钮点击时，能将 hello 中 name 给修改了
+
+      1. 先实例化一个空的 vue 实例对象。这个对象，就是中央事件管理器
+        let bus = new Vue()
+      2. 在 hello 组件中的生命周期函数(created. mounted)中，通过 bus 做一个事件的监听。事件处理函数中，自己修改自己的name. 
+      3. 在 world 组件的某个情况下，触发这个 bus 刚才所监听的事件
+
+     -->
+
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let bus = new Vue();
+
+      Vue.component("hello", {
+        data() {
+          return {
+            name: "hello"
+          };
+        },
+        template: `
+          <div>hello - {{ name }}</div>
+        `,
+        created() {
+          // let that = this;
+          bus.$on("abc", () => {
+            this.name = "张三";
+          });
+        }
+      });
+
+      Vue.component("world", {
+        data() {
+          return {
+            name: "world"
+          };
+        },
+        template: `
+          <div>world - {{ name }}
+            <button @click="fn1">点我，修改 hello 的名字</button>
+          </div>
+        `,
+
+        methods: {
+          fn1() {
+            bus.$emit("abc");
+          }
+        }
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+        <div id="app">
+          <hello></hello>
+
+          <hr>
+
+          <world></world>
+        </div>
+      `
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        v-bind:title="abc"
+        v-bind:abc="abc"
+
+        class与style的绑定在vue中非常的特殊
+        v-bind:class
+        v-bind:style
+       -->
+
+      <h1>Tab 选项卡切换</h1>
+      <button :class="{ active: curPage === 'home' }" @click="curPage = 'home'">
+        首页
+      </button>
+      <button
+        :class="{ active: curPage === 'about' }"
+        @click="curPage = 'about'"
+      >
+        关于页
+      </button>
+      <button :class="{ active: curPage === 'list' }" @click="curPage = 'list'">
+        列表页
+      </button>
+
+      <div v-if="curPage === 'home'">
+        <h2>我是 首页</h2>
+      </div>
+      <div v-if="curPage === 'about'">
+        <h2>我是 关于页</h2>
+      </div>
+      <div v-if="curPage === 'list'">
+        <h2>我是 列表页</h2>
+      </div>
+
+      <p :id="msg1" :id="msg2">我是一个屁</p>
+      <!-- 1. 普通情况下，多次绑定同一个属性，以第一个为准 -->
+      <p id="abc" :id="msg2">我是一个屁</p>
+      <!-- 2. 普通情况下, 同时存在 老方式和绑定的方式，以绑定的方式为准 -->
+      <p class="abc" :class="msg2">我是一个屁</p>
+      <!-- 3. 如果绑定的是 class , 那么会将土方法的 class 拼接起来做为这个元素的 class -->
+      <p style="color: red;" :style="msg3">我是一个屁</p>
+      <!-- 4. 如果绑定的是 style , 那么会将土方法的 style 拼接起来做为这个元素的 style -->
+
+      <!-- 
+        绑定 class 
+        1. 直接放一个 数据
+        2. 直接放置一个 对象
+        <p :class="{ class名字: 一个bol的数据, key2: value2, key3: value3 }">我是一个屁</p>
+        3. 直接放置一个 数组
+        <p :class="['box', msg1, 三元运算]">我是一个屁</p>
+          1. 普通字符串，会直接作为这个元素的 一个 class
+          2. 数据，那么这个数据的值，会作为这个元素的一个 class
+          3. 三元运算，运算的结果会作为这个元素的一个 class
+       -->
+      <p :class="{ box: isBox }">我是一个屁</p>
+
+      <p :class="['box', msg2, isBox ? 'a' : 'b']">我是一个屁</p>
+
+      <!-- 
+        绑定 style
+        1. 直接放置一个 数据，这个数据是 styleObject
+        2. 直接放置一个 对象
+        <p :style="{key: value, key: value}">我是一个屁</p>
+          key - css 属性
+          value - 属性值
+       -->
+      <p
+        :style="{color: color, fontSize: fs + 'px', transform: 'translate(50px, 0)'}"
+      >
+        我是一个屁
+      </p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          curPage: "home",
+          fs: 40,
+          color: "red",
+          isBox: false,
+          msg1: "box1",
+          msg2: "box2",
+          msg3: {
+            fontSize: "20px" // 这里需要将 短横线写法，写成小驼峰写法
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

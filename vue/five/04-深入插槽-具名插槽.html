@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 0. 我们将组件调用的时候，开始标签与结束标签中的内容。叫做插槽模板。坑模板
+      // 1. 组件中插槽的个数是没有限制的。
+      // 2. 坑可以取名字, 给坑设置 name 属性，属性值就是这个坑的名字 。这时需要带钥匙才能进坑。
+      //    2.1 给插槽模板设置 slot="某个坑的名字" 就可以让这个模板进入到对应的坑中
+      // 3. 组件还可以弄一个不带名字的坑，这时没有钥匙的模板内容就会进入到这个不带名字的坑中 （默认坑）
+
+      // 4. 坑的默认内容，可以在 坑的标签中写入内容。当没有对应的模板进入这个坑时，那么这个坑会被它的默认内容所替换。
+
+      Vue.component("hello", {
+        template: `
+          <div>
+            <slot name="top">
+              <h1>我是 top</h1>
+            </slot>
+
+            <h1>欢迎你</h1>
+
+            <slot name="bottom"></slot>
+
+            <hr>
+
+            <slot></slot>
+          </div>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+          <div id="app">
+            <hello>
+                <p>我没有钱</p>
+              <p>我没有车</p>
+
+              <p slot="top">我是一个屁</p>
+
+              <p slot="bottom">再来一瓶</p>
+
+              
+              <p>我没有房</p>
+            </hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

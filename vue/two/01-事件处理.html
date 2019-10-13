@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .parent {
+        padding: 50px;
+        background: red;
+      }
+
+      .child {
+        height: 200px;
+        background: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        系统修饰符
+        .ctrl
+        .alt
+        .shift
+        .meta     windows  微软图标键   mac command 键 (⌘)
+        .exact    精准匹配
+       -->
+
+      <!-- 
+        鼠标事件修饰符
+        .left
+        .right
+        .middle
+
+       -->
+
+      <button @click.ctrl.exact.right="fn6">点我，需要按住 ctrl 键</button>
+
+      <!-- 
+        v-on 指令绑定事件
+        v-bind:title="msg" => :title="msg"
+        v-on:click="fn1" => @click="fn1"
+
+        事件对象：
+          绑定事件的时候，事件处理函数可以加括号也可以不加，不加括号的时候，事件处理函数才能主动接受到事件对象
+
+          如果在加括号的情况下，需要使用事件对象，那么得手动传递事件对象下去。$event
+          @click="fn1"  
+       -->
+
+      <h1>{{ msg }}</h1>
+
+      <button @click="fn2('张三', $event)">点我呀1</button>
+
+      <button @click="fn2('李四', $event)">点我呀2</button>
+
+      <!-- 
+        事件修饰符
+        .stop
+        .prevent
+        .capture    将事件行为从冒泡修改为捕获
+        .self       规定事件的触发一定要在绑定事件的元素来才行
+                    target 与 currentTarget 一致时才能触发
+        .once       只触发一次事件
+        
+
+       -->
+
+      <!-- <div class="parent" @click.capture="fn3">
+        <div class="child" @click="fn4"></div>
+      </div> -->
+
+      <div class="parent" @click.self.once="fn3">
+        <div class="child"></div>
+      </div>
+
+      <!-- 
+        按钮修饰符  以前通过 事件对象.keyCode
+
+        .enter      回车键盘
+        .page-down  page-down键盘
+        .按键码   .13 
+        .按键码的别名 
+          .esc
+          .tab
+          .delete
+          .space
+          .up
+          .down
+          .left
+          .right
+
+        自定义别名   Vue.config.keyCodes.f1 = 112
+
+
+       -->
+
+      <input type="text" @keyup.abc="fn5" />
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 定义一个别名 让 abc 就是  13的别名
+      Vue.config.keyCodes.abc = 13;
+
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          msg: "事件处理"
+        },
+        methods: {
+          fn6() {
+            console.log("fn6");
+          },
+
+          fn5() {
+            console.log("fn5");
+          },
+
+          // 方法与事件处理函数
+          fn1(event) {
+            console.log(event);
+          },
+
+          /**
+           * 打印用户名
+           * @param {String} name 用户名
+           */
+          fn2(name, e) {
+            console.log(name);
+            console.log(e);
+          },
+
+          fn3(event) {
+            console.log(event.target); // 当前触发事件的元素
+            console.log(event.currentTarget); // 当前事件绑定的元素
+            console.log("fn3");
+          },
+
+          fn4() {
+            console.log("fn4");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

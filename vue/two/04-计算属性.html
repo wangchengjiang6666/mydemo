@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        计算属性：是vue中一个很重要的概念，能帮我们实现很多花里胡哨的功能点。特别好用。
+
+          针对data中的某个数据或者其他的计算属性做的一个二次计算，并且返回一个新的数据，
+
+          computed: {
+            key: value,
+            key: value
+            key -> 计算属性
+            value -> 是这个属性的值，是一个方法，这个方法必须要 return .return的内容就是这个计算属性的值。
+          }
+
+          注意：
+          1. 记得 return
+          2. 计算属性的值，会随着他的依赖项的变化而变化，有多个依赖项的时候，只要变化了一个，就会重新计算
+          3. 计算属性，不允许手动修改他的值，
+          4. 如果一定要修改的话，那么需要配置 set 选项
+            key: function () {
+
+            }
+
+            key: {
+              // 取值属性，是个方法，直接就是一开始那个普通的写法
+              get: function () {
+
+              },
+
+              // 设置值的一个属性，是个方法，当我们手动对这个 key = xxx 时候，就会进入到这个函数，这个函数中的value参数就是 xxx
+              // 最终你会发现，没什么用，你改变这个计算属性，其实还是你自己在这个方法里面去修改了这个计算属性的依赖项
+              set: function (value) {
+                // 这个 value 是你要修改的内容
+              }
+            }
+
+
+       -->
+      <p>{{ msg }}</p>
+      <!-- 反转字符串 -->
+      <p>
+        {{
+          msg
+            .split("")
+            .reverse()
+            .join("")
+        }}
+      </p>
+      <p>{{ reverseMsg }}</p>
+
+      <!-- 拼接姓名 -->
+      <p>{{ firstName + lastName }}</p>
+      <p>{{ fullName }}</p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          msg: "hello world",
+          firstName: "张",
+          lastName: "三"
+        },
+
+        computed: {
+          // reverseMsg() {
+          //   // 计算属性一定要 return , 如果不 return, 得到将会是一个  undefined.
+          //   // 这个技术属性可以像 data 中的数据一样，拿到页面中去渲染使用
+          //   return this.msg
+          //     .split("")
+          //     .reverse()
+          //     .join("");
+          // },
+          reverseMsg: {
+            get() {
+              console.log("get");
+              return this.msg
+                .split("")
+                .reverse()
+                .join("");
+            },
+
+            set(value) {
+              console.log("set", value);
+              // 发现还是要修改依赖项，
+              this.msg = value
+                .split("")
+                .reverse()
+                .join("");
+            }
+          },
+
+          // fullName() {
+          //   // 基于 firstName 与 lastName 二次计算得出的
+          //   return this.firstName + this.lastName;
+          // }
+          fullName: {
+            get() {
+              return this.firstName + this.lastName;
+            },
+
+            set(value) {
+              // ...
+              this.firstName = value.split("")[0];
+              this.lastName = value.split("")[1];
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

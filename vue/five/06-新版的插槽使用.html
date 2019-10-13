@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      vue 2.6.0 这个版本开始，vue 提供了一个 v-slot 的指令。来更好的去使用 插槽
+      主要是重新定义了 具名插槽与 作用域插槽的使用方式
+
+      1. 不能直接在元素上使用  v-slot ，需要包裹一个 template
+      2. v-slot:xxx 这里的 xxx 参数才去使用是 坑的名字
+      3. v-slot:xxx="yyy"   这里的 yyy 就是 作用域插槽接收到的数据
+     -->
+
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      Vue.component("hello", {
+        data() {
+          return {
+            name: "张三"
+          };
+        },
+
+        template: `
+          <div>
+            <slot name="top" :who="name"></slot>
+            <h1>我的天</h1>
+            <slot name="bottom"></slot>
+          </div>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+          <div id="app">
+            <hello>
+              <template v-slot:top="obj">
+                <p>我是一个屁, {{ obj.who }} 放的</p>
+              </template>
+            </hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

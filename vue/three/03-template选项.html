@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ msg }}</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        // el: "#app",
+
+        data: {
+          msg: "hello"
+        }
+
+        // 指定这个实例的模板内容, template 是一个字符串，html模板内容
+        // 如果实例指定了 template 选项，那么会使用 template 选项的内容去替换挂载点，
+        // 如果没有指定 template 选项，那么会将 挂载点的内容作为 template 选项
+        // 一定会有替换的操作
+
+        // template: `
+        //   <p>我的天，李威真帅</p>
+        // `
+      });
+
+      // vm.$mount(挂载点的id)  主动挂载
+
+      // vm.$el  当前实例的经过解析完成之后的dom元素
+      // <div id="app">
+      //   <h1>hello</h1>
+      // </div>
+
+      // <div id="app">
+      //   <h1>world</h1>
+      // </div>
+    </script>
+  </body>
+</html>

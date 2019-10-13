@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // props
+
+      Vue.component("hello", {
+        props: {
+          // key: value,
+          // key: value
+          // key - prop 名字
+          // value
+          //      1  类型校验 string number
+          //      2. 对象，更多的规则
+          name: String, // name 需要 字符串类型
+          age: {
+            type: Number,
+            default: 18
+          }
+        },
+
+        template: `
+          <h1>欢迎，{{ name }}, {{ age }}</h1>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        template: `
+          <div id="app">
+            <hello name="[1, 2, 3, 4, 5]"></hello>
+
+            <hello name="[1, 2, 3, 4, 5]" :age="20"></hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

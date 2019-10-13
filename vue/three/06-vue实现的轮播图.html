@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/swiper.min.css" />
+    <style>
+      .swiper-container {
+        height: 210px;
+      }
+
+      .swiper-container img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ msg }}</h1>
+      <!-- 轮播图的dom结构 -->
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item, index) in bannerList">
+            <img :src="item.imgUrl" alt="" />
+          </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          bannerList: [],
+          msg: "hello"
+        },
+
+        methods: {
+          fn1() {
+            console.log(1);
+          },
+
+          getBannerList() {
+            // 发送ajax请求
+            $.ajax({
+              url:
+                "https://m.maizuo.com/gateway?type=2&cityId=440300&k=2318336",
+
+              headers: {
+                "X-Client-Info":
+                  '{"a":"3000","ch":"1002","v":"5.0.4","e":"1565170900240518168747"}',
+                "X-Host": "mall.cfg.common-banner"
+              },
+
+              success: res => {
+                if (res.status === 0) {
+                  this.bannerList = res.data;
+
+                  // vue 带有 $ 的东西，都是它内置的，是它的原型上的。
+                  // 带有 $的属性，比如$el 我们称之为实例属性
+                  // 带有 $的方法，比如$nextTick 我们称之为实例方法
+                  // this.fn1()
+
+                  // 会自动在这一次数据更新流程中，真是dom更新完成之后，触发他的回调函数
+                  this.$nextTick(() => {
+                    console.log("nextTick");
+                    // 实例化 swiper
+                    new Swiper(".swiper-container", {
+                      // 如果需要分页器
+                      pagination: {
+                        el: ".swiper-pagination"
+                      }
+                    });
+                  });
+
+                  // setTimeout(() => {
+                  //   // 实例化 swiper
+                  //   new Swiper(".swiper-container", {
+                  //     // 如果需要分页器
+                  //     pagination: {
+                  //       el: ".swiper-pagination"
+                  //     }
+                  //   });
+                  // }, 100);
+                } else {
+                  alert(res.msg);
+                }
+              }
+            });
+          }
+        },
+
+        created() {
+          this.getBannerList();
+          //....
+        },
+
+        updated() {
+          console.log("123");
+          // console.log(this.bannerList)
+
+          // 这里没法做判断的
+          // // 实例化 swiper
+          // new Swiper(".swiper-container", {
+          //   // 如果需要分页器
+          //   pagination: {
+          //     el: ".swiper-pagination"
+          //   }
+          // });
+        }
+      });
+    </script>
+  </body>
+</html>

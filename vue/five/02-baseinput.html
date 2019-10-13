@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="./js/vue.js"></script>
+  <script>
+    // 1. 首先这个 base-input .我的作用是基础组件，希望在调用的时候，可以像原生的input那样传递input所支持的那些 属性。比如 type 、placeholder 、disabled 、readyonly
+    // 2. 这时我们发现实现起来，需要在定义组件的时候，写太多太多的 prop .
+    // 3. 这时就将这些属性，设置为非 props 特性
+    // 4. 需要禁用继承
+    // 5. 再使用 $attrs 将传递下来的非props特性，看你想要写在哪。就去写在哪。
+    // 6. 为了避免后续维护起来还恶心，一开始就考虑的更全面一些，你传了啥，我就绑定啥
+
+    Vue.component("base-input", {
+      inheritAttrs: false,
+      props: {
+        label: String
+        // type: {
+        //   type: String,
+        //   default: "text"
+        // },
+        // placeholder: String
+      },
+      // template: `
+      //   <label>
+      //     <span>{{ label }}：</span>
+      //     <input
+      //       :type="$attrs.type"
+      //       :placeholder="$attrs.placeholder"
+      //     />
+      //   </label>
+      // `
+      // v-bind:xxx='xx'
+      // v-bind="{}"
+      // { type: '123', id: 123}
+      template: `
+          <label>
+            <span>{{ label }}：</span>
+            <input v-bind="$attrs"/>
+          </label>
+        `
+    });
+
+    let vm = new Vue({
+      el: "#app",
+      data: {},
+
+      template: `
+        <div id="app">
+          <div class="reg">
+            <div class="reg_row">
+              <base-input label="用户名" placeholder="请输入用户名"></base-input>
+            </div>
+
+            <div class="reg_row">
+              <base-input 
+                label="密码" 
+                type="password" 
+                placeholder="请输入密码"
+                disabled
+                >
+              </base-input>
+            </div>
+          </div>
+        </div>
+      `
+    });
+  </script>
+</body>
+
+</html>

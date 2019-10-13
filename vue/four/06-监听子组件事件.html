@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      Vue.component("hello", {
+        template: `
+          <div>
+            <button @click="fn1">点我</button>
+          </div>
+        `,
+        methods: {
+          fn1() {
+            this.$emit("abc", "我的天");
+          }
+        }
+      });
+
+      Vue.component("parent", {
+        data() {
+          return {
+            child1Name: "张小三",
+            child2Name: "张小四"
+          };
+        },
+        template: `
+          <div class="parent">
+            <h1>我的名字是，张三</h1>
+
+            <child :name="child1Name" @abc="getMsg('child1Name', $event)" ></child>
+
+            <child :name="child2Name" @abc="getMsg('child2Name', $event)" ></child>
+
+            <hello @abc="fn1('123', $event)"></hello>
+          </div>
+        `,
+        methods: {
+          getMsg(str, qwe) {
+            console.log(qwe);
+            console.log(str);
+            console.log("接收到儿子的消息");
+            this[str] = "张三丰";
+          },
+
+          fn1(e, o) {
+            console.log(o); // 我的天呀
+          }
+        }
+      });
+
+      Vue.component("child", {
+        props: {
+          name: String
+        },
+        template: `
+          <div class="child">
+            <h2>我的名字是：{{ name }}</h2>
+            <button @click="handlePanNi">我不喜欢这个名字，我要修改为张三丰</button>
+          </div>
+        `,
+        methods: {
+          handlePanNi() {
+            // this.name = "张三丰";
+            // 不能修改 props 的数据。
+            // 只能通知父组件,让父组件去做修改.
+            // 1. 将父组件传递下来的数据做成父组件的data数据
+            // 2. 父组件还需要在调用子组件的地方，自定义一个事件，用作通知来用。
+            // 3. 子组件，触发父组件提供下来的自定义事件。通过  this.$emit 来触发
+
+            console.log("实在不喜欢这个名字，自己改又不改，给父亲打个商量");
+            // this.$emit(事件的名字, 其他东西)  其他东西在事件那块是以 $event 接收到的
+            this.$emit("abc", "hello");
+          }
+        }
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+        <div id="app">
+          <parent></parent>
+        </div>
+      `
+      });
+    </script>
+  </body>
+</html>

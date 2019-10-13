@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 调用 hello 组件 -->
+      <hello></hello>
+
+      <world></world>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 全局注册一个组件 hello
+      Vue.component("hello", {
+        // 组件的选项配置
+
+        // template 是必不可少的一个选项
+        template: `
+          <div>
+            <h1>我是 hello 组件</h1>
+            <p>{{ msg }}</p>
+
+            <world></world>
+          </div>
+          <p>123</p>
+        `,
+
+        // 组件的 data 数据，只能用在当前组件中
+        data: function() {
+          return {
+            msg: "我的天"
+          };
+        }
+      });
+
+      Vue.component("world", {
+        template: `
+          <div><h1>我是 world 组件</h1></div>
+        `
+      });
+
+      // new Vue 是vue 实例
+      let vm = new Vue({
+        el: "#app"
+      });
+    </script>
+  </body>
+</html>

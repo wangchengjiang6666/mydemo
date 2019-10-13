@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.box {
+  height: 200px;
+  border: 1px solid #000;
+  overflow-y: auto;
+  li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #000;
+  }
+}

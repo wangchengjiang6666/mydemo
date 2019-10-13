@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>后端搜索</h1>
+
+      <input type="text" v-model="searchName" placeholder="请输入学生名字" />
+
+      <ul>
+        <li v-for="(item, index) in studentList">{{ item.name }}</li>
+      </ul>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/jquery.min.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          searchName: "",
+          studentList: []
+        },
+
+        watch: {
+          searchName(newVal, oldVal) {
+            // 重新发送ajax请求向后台请求数据
+            this.getStudentList();
+          }
+        },
+
+        methods: {
+          getStudentList() {
+            $.get(
+              "http://localhost:3000/students",
+              {
+                name_like: this.searchName
+              },
+              res => {
+                this.studentList = res;
+              }
+            );
+          }
+        }
+      });
+
+      vm.getStudentList();
+    </script>
+  </body>
+</html>

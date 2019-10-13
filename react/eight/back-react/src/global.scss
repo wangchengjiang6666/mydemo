@@ -1,0 +1,10 @@
+@import './assets/styles/base.scss';
+
+#root {
+  display: flex;
+  height: 100%;
+}
+
+#root > div:first-child {
+  flex: 1;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ msg }}</h1>
+
+      <ul id="box" style="height: 100px; overflow-y: auto">
+        <li style="height: 50px;" v-for="(item, index) in list">{{ item }}</li>
+      </ul>
+
+      <button @click="hello">点我</button>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          msg: "hello",
+          list: ["apple", "banana", "orange"]
+        },
+        methods: {
+          hello() {
+            // alert(1);
+            // 将 list 追一个元素
+            this.list.push("西瓜");
+          }
+        },
+        beforeCreate() {
+          // 1. 实例创建之前，那么 data 中的数据不能访问，methods 中方法也是访问不到
+          // console.log(this.msg);
+          // this.hello();
+          // console.log("beforeCreate");
+        },
+
+        created() {
+          // 1. 实例创建完成了，数据和方法都可以使用了
+          // 2. 获取ajax数据
+          // console.log(this.msg);
+          // this.hello();
+          // console.log("created");
+        },
+
+        beforeMount() {
+          // 1. 挂载之前，你获取不到真实的dom数据
+          // console.log(document.getElementById("app").innerHTML);
+          // console.log("beforeMount");
+        },
+
+        mounted() {
+          // 在vue中 需要使用的数据都必须先在data中定义一下，不然这个数据的变化会不引起页面的更新
+          // 如果某个数据本身就是不想引起页面的更新的话，那么不要写在 data 里面。
+
+          this.timer = setInterval(() => {
+            console.log(1111);
+          }, 1000);
+
+          // 1. 挂载完成，可以获取到真实的dom数据
+          // 2. 还可以通过 vm.$el 的方法获取这个 实例的 dom 数据
+          // console.log(this.$el.innerHTML);
+          // console.log(document.getElementById("app").innerHTML);
+          // console.log("mounted");
+        },
+
+        beforeUpdate() {
+          // 1. 很少使用，一般是在数据更新之前做一些想做的事情
+          // this.msg = 'world'
+          console.log(this.msg); // world
+          //
+          console.log(this.$el.innerHTML); //
+          // console.log("beforeUpdate");
+        },
+
+        updated() {
+          // 1. 数据更新完成，并且页面真实dom也得到了更新。
+          // 2. 数据变化之后，想立即对dom做一些操作。比如更新滚动条
+          console.log(this.msg);
+          console.log(this.$el.innerHTML); //
+          console.log("updated");
+
+          let ulEl = document.getElementById("box");
+          ulEl.scrollTop = ulEl.scrollHeight - ulEl.clientHeight;
+        },
+
+        beforeDestroy() {
+          // 1. 对数据的一些销毁工作，比如 setInterVal
+
+          clearInterval(this.timer);
+          console.log("beforeDestroy");
+        },
+
+        destroyed() {
+          // 1. 一般没什么实用场景
+          console.log("destroyed");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    前端搜索。 computed
+      前端将数据全部请求回来。然后前端来做搜索的判断
+    后端搜索。
+      前端通过请求参数的不同，向后台获取搜索到的不同的结果
+   -->
+
+    <div id="app">
+      <h1>搜索学生列表</h1>
+      <!-- <input
+        v-model="searchName"
+        @keyup="search"
+        type="text"
+        placeholder="请输入学生名字"
+      />
+      <button @click="search">搜索</button> -->
+
+      <!-- 计算属性 -->
+      <input id="myInput" type="text" placeholder="请输入学生名字" />
+      <button @click="search2">搜索</button>
+      <ul>
+        <li v-for="(item, index) in searchList">{{ item.name }}</li>
+      </ul>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          searchName: "", // 搜索关键字
+          studentList: [] // 请求后台得到的学生集合数据
+          // searchList: []
+        },
+
+        computed: {
+          searchList() {
+            // 基于  studentList 与 searchName 计算之后返回一个新的数据
+            let result = [];
+            this.studentList.forEach(item => {
+              if (item.name.indexOf(this.searchName) > -1) {
+                result.push(item);
+              }
+            });
+            return result;
+          }
+        },
+
+        methods: {
+          search2() {
+            // 将 input 输入框的 value 值赋值给 this.searchName
+            // 注意，这里使用id的方式，不推荐，后续请关注 ref ........
+            this.searchName = document.getElementById("myInput").value;
+          },
+          /**
+           * 请求学生列表
+           */
+          getStudentList() {
+            // let that = this;
+            // $.get("/json/student.json", function(res) {
+            //   // 将请求得到的相关数据赋值给我们的 studentList
+            //   that.studentList = res;
+            //   console.log(res);
+            // });
+
+            $.get("/json/student.json", res => {
+              this.studentList = res;
+              // this.searchList = res;
+            });
+          }
+
+          // search() {
+          //   // 1. 点击搜索按钮时，需要得到 输入框中的值？
+          //   console.log(this.searchName);
+          //   // 2. 将 studentList 中的每一项的 name 与 这里 searchName 进行比较。然后将能匹配的数据重新赋值给 studentList
+          //   let result = []; // 存放匹配的结果结合
+          //   this.studentList.forEach(item => {
+          //     if (item.name.indexOf(this.searchName) > -1) {
+          //       // 这个人是匹配的。
+          //       result.push(item);
+          //     }
+          //   });
+
+          //   // this.studentList = result;
+
+          //   // 这边的实现，没问题，但是回不去之前的数据了。
+          //   // 这时我们这样想，拿两个数据来做存储，
+          //   // 1. studentList  后台请求到的全部数据
+          //   // 2. searchList   搜索匹配的结果集合
+          //   //    这时修改的话，就只需要修改 searchList, 页面渲染就使用 searchList
+          //   this.searchList = result;
+          // }
+        }
+      });
+
+      // 目前还没有讲到 生命周期的钩子函数，所以采用以前的方式去在页面渲染完成调用一下  getStudentList 这个函数
+      vm.getStudentList();
+    </script>
+  </body>
+</html>

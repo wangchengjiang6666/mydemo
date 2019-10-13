@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        watch 监听，又是一个选项
+          watch 可以监听 data 或 computed 的某个数据的变化，然后去做一些事情。
+
+        watch: {
+          key: value
+          key -> 要监听的数据
+          value -> 函数 (newVal, oldVal) {}
+                  newVal 是要监听的数据变化之后的值
+                  oldVal 是要监听的数据变化之前的值
+        }
+
+        watch 与 computed 的 PK:
+        什么时候用什么？
+          如果需要基于当前的某些数据的变化得到一个新的数据，那么就用 computed
+
+          如果需要在某个数据发生变化之后，去干点什么，就用 watch
+       -->
+
+      <p>{{ firstName }}</p>
+      <p>{{ lastName }}</p>
+      <p>{{ fullName }}</p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          firstName: "张",
+          lastName: "三",
+          fullName: "张三"
+        },
+
+        watch: {
+          firstName(newVal, oldVal) {
+            console.log(newVal, oldVal);
+            this.fullName = newVal + this.lastName;
+          },
+
+          lastName(newVal, oldVal) {
+            this.fullName = this.firstName + newVal;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- v-for -->
+
+      <!-- 循环普通数组 -->
+      <ul>
+        <li v-for="(item, index) in list">{{ item }} -- {{ index }}</li>
+      </ul>
+
+      <!-- 循环数组对象 -->
+      <ul>
+        <li v-for="(item, index) in musicList">
+          {{ item.name }} -- {{ item.id }} -- {{ index }}
+        </li>
+      </ul>
+
+      <!-- 循环对象 -->
+      <ul>
+        <li v-for="(value, key, index) in myObj">
+          {{ value }} - {{ key }} - {{ index }}
+        </li>
+      </ul>
+
+      <!-- 循环数字 
+        10    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 从1 开始
+      -->
+      <ul>
+        <li v-for="(item, index) in 10">{{ item }} - {{ index }}</li>
+      </ul>
+
+      <!-- 多层循环 -->
+      <ul>
+        <li v-for="(item, index) in filmList">
+          <span>{{ item.id }}</span>
+          <span>{{ item.name }}</span>
+          <div>
+            <ul>
+              <li v-for="(act, i) in item.acts">{{ act }}</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          myObj: {
+            name: "cxk",
+            age: 18,
+            sex: "女"
+          },
+          // 电影列表
+          filmList: [
+            {
+              id: 1,
+              name: "哪吒之魔童降世",
+              acts: ["饺子", "包子", "馒头"]
+            },
+            {
+              id: 2,
+              name: "烈火英雄",
+              acts: ["路人甲", "黄教主"]
+            }
+          ],
+          list: ["apple", "banana", "orange", "西瓜"],
+          musicList: [
+            {
+              id: 1,
+              name: "西海情歌"
+            },
+            {
+              id: 2,
+              name: "鸡你太美"
+            }
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>

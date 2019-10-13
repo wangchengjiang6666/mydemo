@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- PK
+        1. 计算属性不需要加 () 去使用， 而方法需要加 () 去使用
+        2. ******** 计算属性有缓存。。。。。计算属性只会在你的依赖项发生变化的时候才会重新计算
+      -->
+
+      <!-- 计算属性实现的 reverseMsg -->
+      <p>{{ reverseMsg }}</p>
+
+      <p>{{ reverseMsg }}</p>
+      <p>{{ reverseMsg }}</p>
+      <p>{{ reverseMsg }}</p>
+
+      <!-- 通过方法实现的 reverseMsg -->
+      <p>{{ reverseMsgByFn() }}</p>
+      <p>{{ reverseMsgByFn() }}</p>
+      <p>{{ reverseMsgByFn() }}</p>
+      <p>{{ reverseMsgByFn() }}</p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          msg: "hello world",
+          firstName: "张",
+          lastName: "三"
+        },
+
+        computed: {
+          reverseMsg() {
+            console.log("计算属性");
+            return this.msg
+              .split("")
+              .reverse()
+              .join("");
+          }
+        },
+
+        methods: {
+          reverseMsgByFn() {
+            console.log("方法");
+            return this.msg
+              .split("")
+              .reverse()
+              .join("");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

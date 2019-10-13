@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      // 全局注册 使用 Vue.component
+      // 局部注册 使用 components 选项
+      // {
+      //   components: {
+      //     key: value
+      //     key -> 局部组件名字
+      //     value -> 这个局部组件的选项配置
+      //   }
+      // }
+
+      Vue.component("hello", {
+        template: `
+          <div>
+            <h1>hello</h1>
+
+            <world></world>
+
+            <worldSon></worldSon>
+          </div>
+        `
+      });
+
+      Vue.component("world", {
+        template: `
+          <div>
+            <h1>world</h1>
+
+            <worldSon></worldSon>
+          </div>
+        `,
+
+        components: {
+          worldSon: {
+            name: "abc", // 只是让面板修改显示名字，还可以处理组件调用自己的情况
+
+            template: `
+              <h1>我是 world 的 儿子。 我叫 worldSon</h1>
+            `
+          }
+        }
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        template: `
+          <div id="app">
+            <hello></hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

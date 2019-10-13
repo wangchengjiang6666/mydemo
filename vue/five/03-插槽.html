@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 1. 首先明确知道，组件的开始标签与闭合标签中写的内容默认是不会被处理渲染出去的。
+
+      // 2. 我们有些时候希望，能够将组件开始标签与闭合标签中的内容给渲染出去。
+      //      2.1 思考昨天的 dialog 的内容部分。昨天是写死的。
+
+      // 3. 这时，插槽就要上线，可以理解为插槽是个坑。使用什么模板去填充这个坑
+
+      // 插槽的使用步骤
+      // 1. 首先你得明确的知道，开始标签与闭合标签中写的内容，需要渲染在这个组件的那个部分
+      // 2. 在想要渲染的地方。放置一个坑。<slot></slot>
+      Vue.component("hello", {
+        template: `
+          <div>
+            
+            <h1>欢迎你</h1>
+
+            <slot></slot>
+          </div>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+          <div id="app">
+            <hello>
+              <p>我是一个屁</p>
+            </hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

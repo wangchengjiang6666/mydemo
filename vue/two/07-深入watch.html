@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>深入watch</h1>
+
+      <!-- 
+        1. 如果要监听一个引用数据类型中的某个属性发生变化，那么默认写法是不ok的。
+          可以用两种方式
+          1. 监听  'userInfo.name'
+          2. 这个对象的任意属性的变化，我都监听到的话
+            key: function() {
+
+            }
+
+            key: {
+              handler: function() {
+
+              },
+              deep: true  // 深度监听
+            }
+
+       -->
+    </div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          userInfo: {
+            name: "张三",
+            age: 19
+          }
+        },
+
+        watch: {
+          // "userInfo.name"(newVal, oldVal) {
+          //   console.log("userInfo 发生变化了");
+          // }
+
+          userInfo: {
+            handler(newVal, oldVal) {
+              console.log(oldVal);
+              console.log("userInfo 发生变化了");
+            },
+            deep: true, // 深度监听
+            immediate: true // 默认触发一次 handler
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div :[abc]="msg">我是一个div</div>
+
+      <div v-on:click="fn1">
+        <button v-on:click.stop="handleClick">
+          按钮，点击让上面的 div 不再有 id 而是 class
+        </button>
+      </div>
+
+      <a href="https://www.baidu.com" v-on:click.prevent="fn2">去百度</a>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          msg: "box",
+
+          abc: "id"
+        },
+
+        methods: {
+          // 事件处理函数与方法
+          handleClick(e) {
+            // e.stopPropagation();
+            // abc 修改为 class
+            this.abc = "class";
+            console.log(2);
+          },
+
+          fn1() {
+            console.log(1);
+          },
+
+          fn2(e) {
+            // e.preventDefault();
+            alert(1);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

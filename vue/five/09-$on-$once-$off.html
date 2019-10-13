@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+
+        data: {},
+
+        template: `
+          <div id="app">
+            <button @click="fn1">触发 abc 事件</button>
+
+            <button @click="fn2">移除 abc 事件</button>
+          </div>
+        `,
+
+        methods: {
+          fn1() {
+            // 触发
+            this.$emit("abc", 123);
+          },
+
+          fn2() {
+            // 移除
+            this.$off("abc");
+          }
+        },
+
+        mounted() {
+          // 监听
+          // this.$on('事件名', '事件处理函数')
+          this.$on("abc", function(num) {
+            console.log(num);
+            console.log("abc 事件被触发了");
+          });
+
+          // 只监听一次
+          // this.$once("abc", function(num) {
+          //   console.log(num);
+          //   console.log("abc 事件被触发了");
+          // });
+        }
+      });
+    </script>
+  </body>
+</html>

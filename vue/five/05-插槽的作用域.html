@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 1. 插槽模板内容中使用的数据或方法都属于哪个组件呢？
+      //    这个插槽模板写在哪，就属于哪，而不是看他最终渲染在哪。。。
+
+      // 2. 有时候，就需要让插槽模板内容中的使用的数据，是来至于这个组件，该怎样?
+      //    2.1 给这个坑加一些属性，加的属性不能是 name
+      // <slot who="张三" age="18"></slot>
+      //    2.2 在插槽模板内容的标签上，定义 slot-scope="xxx"
+      // <p slot-scope="xxx">我是一个屁，{{ name }} 放的。</p>
+      //    2.3 这时 xxx 是一个对象 { who: '张三', age: 18 }
+      //        <p slot-scope="xxx">我是一个屁，{{ xxx.who }} 放的。</p>
+      Vue.component("hello", {
+        data() {
+          return {
+            name: "张三"
+          };
+        },
+        template: `
+          <div>
+
+            <h1>欢迎你</h1>
+
+            <slot :who="name" age="18"></slot>
+          </div>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          name: "李四"
+        },
+
+        // template: `
+        //   <div id="app">
+        //     <hello>
+        //       <p slot-scope="obj" >我是一个屁，{{ obj.who }} 放的, 他今年 {{ obj.age }} 岁。</p>
+        //     </hello>
+        //   </div>
+        // `
+
+        // 解构赋值
+        template: `
+          <div id="app">
+            <hello>
+              <p slot-scope="{ who, age }" >我是一个屁，{{ who }} 放的, 他今年 {{ age }} 岁。</p>
+            </hello>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

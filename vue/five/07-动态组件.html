@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      动态组件，是vue中提供的一个内置组件叫做 component .
+      然后可以设置 这个 component 的 一个 is 属性，让这个 comoponent 渲染为 is 属性设置的值的那个组件。
+
+
+      有一个内置组件叫做  keep-alive 这个组件能帮我们将某个组件给缓存下来。
+
+      1. 将 keep-alive 包裹住我们的需要缓存的组件
+      2. 缓存的结果，就是这个组件不会被销毁，也就不会被重新创建
+      3. 缓存上的组件，会多出 2个 生命周期函数    activated(激活)  deactivated(失活)
+
+      4. keep-alive 上的一些属性
+          4.1 include   包含
+          4.2 exclude   排除
+          4.3 max       最大
+     -->
+
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      Vue.component("home", {
+        data() {
+          return {
+            num: 1
+          };
+        },
+
+        template: `
+          <div>
+            <h1>我是 home 组件</h1>
+            <button @click="num++"> {{ num }} </button>
+          </div>
+        `,
+        created() {
+          console.log("home 创建");
+        },
+
+        beforeDestroy() {
+          console.log("home 被销毁");
+        },
+
+        activated() {
+          console.log("home 激活");
+          this.timer = setInterval(() => {
+            console.log(1);
+          }, 1000);
+        },
+
+        deactivated() {
+          clearInterval(this.timer);
+          console.log("home 失活");
+        }
+      });
+
+      Vue.component("about", {
+        template: `
+          <div>
+            <h1>我是 about 组件</h1>
+          </div>
+        `
+      });
+
+      Vue.component("list", {
+        template: `
+          <div>
+            <h1>我是 list 组件</h1>
+          </div>
+        `
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          curPage: "home"
+        },
+
+        template: `
+          <div id="app">
+            <button @click="curPage = 'home'">首页</button>
+            <button @click="curPage = 'list'">列表</button>
+            <button @click="curPage = 'about'">关于</button>
+
+            <keep-alive :max="2">
+              <component :is="curPage"></component>
+            </keep-alive>
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

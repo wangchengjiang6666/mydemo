@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    cdn 方式的使用步骤
+    1. 需要有个挂载点的元素
+    2. 引入相关cdn文件
+      2.1 react.js        react核心部分             React 全局对象
+      2.2 react-dom.js    react渲染真实DOM的部分     ReactDOM 全局对象
+      2.3 babel-standalone.js   转换 jsx 语法的 ，需要明确那个script脚本需要被转换，设置 type 属性 为 text/babel
+    3. 写代码
+   -->
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+      // hello react
+
+      /**
+       * ReactDOM.render() 渲染真实的dom页面，一个项目一般只会调用一次。
+       * @param {虚拟dom元素} dom 虚拟dom元素
+       * @param {DocumentFragment} el 挂载点的dom对象
+       */
+      // 1. 直接使用普通字符串
+      // ReactDOM.render("hello react", document.getElementById("app"));
+      // 2. 使用html元素 <h1>hello react</h1>
+      // ReactDOM.render("<h1>hello react</h1>", document.getElementById("app"));
+      // ? 如何将上面的 h1 给解析并渲染出去呢？
+
+      ReactDOM.render(<h1>hello react</h1>, document.getElementById("app"));
+      // 上面这行使用 jsx(在javascript中使用 xhtml) 语法，但是浏览器默认情况下是不能解析 jsx 语法的。所以需要借助一个转换器 babel 。将jsx语法转换成浏览器能够识别的js代码
+    </script>
+
+    <script>
+      // ? 上面这行代码可以不使用 jsx 语法也能实现 ？
+
+      /**
+       *  React.createElement() 创建虚拟DOM元素
+       *  @param {string} component 可以是组件的名字，也可以是原生html标签的名字
+       *  @param {Object} props 这个生成的元素的属性设置
+       *  @param {string | array} children 这个元素的子元素
+       */
+      // React.createElement(component, props, ...children);
+
+      // <h1><p><span>hello</span><span>react</span></p><button>点我</button></h1>
+      // ReactDOM.render(
+      //   React.createElement("h1", { id: "box", title: "123" }, [
+      //     React.createElement("p", null, [
+      //       React.createElement("span", null, "hello"),
+      //       React.createElement("span", null, "react")
+      //     ]),
+      //     React.createElement("button", null, "点我")
+      //   ]),
+      //   document.getElementById("app")
+      // );
+
+      // jsx 代码，其实就是个语法糖，他经过 babel 转换之后，转换的代码就是 React.createElement
+      // 使用了 jsx 语法的代码，发现其实代码中并没有使用 React 。那么  React 是否可以不引入呢？
+    </script>
+  </body>
+</html>

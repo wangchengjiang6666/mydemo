@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        v-model 指令 将数据与表单元素双向绑定
+       -->
+      <input type="text" v-model.number="num" />
+
+      <select v-model="selected" multiple>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+
+      <select v-model="myLoveCity">
+        <option value="">请选择</option>
+        <option value="shenzhen">深圳</option>
+        <option value="dongguan">东莞</option>
+      </select>
+
+      <!-- radio -->
+      <input type="radio" v-model="mySex" value="男" />男
+      <input type="radio" v-model="mySex" value="女" />女
+
+      <!-- 下面这个input，v-model 作用，是将  data 中的 msg 与当前这个 input value 值双向绑定了。当 msg 发生变化，那么 这个 input value 也会变化，如果在 input 上输入内容。 也会引起 msg 的变化 -->
+      <input type="text" v-model.lazy="msg" />
+
+      <!-- 复选框  checkbox -->
+      <!-- ? 注册时，条款必须勾上，才能注册，如何做？ -->
+      <!-- 单个 checkbox 会将其绑定的数据的类型设置为 bol -->
+      <label>
+        <input type="checkbox" v-model="isChecked" />
+        <span>请同意我们的狗屁</span>
+      </label>
+      <button @click="fn1" :disabled="!isChecked">注册</button>
+
+      <!-- 多个 checkbox 会将其绑定的数据的类型设置为  array -->
+      <h1>请勾选你喜欢的水果</h1>
+      <ul>
+        <li v-for="(item, index) in list">
+          <label>
+            <!-- 
+              这个 checkBox 被勾上的时候，会将它身上的 value 值 ，追加到 myLoveList 这个数据中。如果取消勾选，会将 myLoveList 中删除到 这个 value 值
+             -->
+            <input type="checkbox" :value="item.id" v-model="myLoveList" />
+            <span>{{ item.name }}</span>
+          </label>
+        </li>
+      </ul>
+
+      <p>你喜欢的水果是：{{ myLoveList }}</p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+
+    <script>
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          num: 0,
+          selected: [],
+          msg: "hello",
+          list: [
+            { id: 1, name: "apple" },
+            { id: 2, name: "banana" },
+            { id: 3, name: "orange" },
+            { id: 4, name: "黄瓜" }
+          ], // 水果列表
+          myLoveList: [1], // 我喜欢的水果集合
+          isChecked: true,
+          mySex: "男",
+          myLoveCity: ""
+        },
+        methods: {
+          fn1() {
+            // if (this.isChecked) {
+            console.log("注册");
+            // }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="./js/vue.js"></script>
+  <script>
+    Vue.component("hello", {
+      inheritAttrs: false,
+      props: ["name", "age"],
+      template: `
+          <div id="box1" class="box1" style="color: red;">
+            <h1>我的天，欢迎 {{ name }}</h1>
+          </div>
+        `,
+      created() {
+        console.log(this.$attrs); // {id:'box2', title: 'msg'}
+      }
+    });
+
+    let vm = new Vue({
+      el: "#app",
+
+      data: {},
+
+      template: `
+          <div id="app">
+            <hello name="张三" id="box2" title="msg" class="box2" style="fontSize: 60px;"></hello>
+          </div>
+        `
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      v-once    只绑定一次
+
+      什么叫指令。在vue中，以 v- 开头的，并且写在标签的属性上的东西，就叫指令。
+
+     -->
+
+    <div id="app">
+      <!-- 表达式 
+        能用 
+          1. + - * / %  > < >= <= != !== == === ||  &&  !
+          2. 三目运算
+          3. 方法调用
+
+        不能用
+          1. var xxx = yyyy
+          2. if 
+          3. for
+          4. switch
+      -->
+      <h1>{{ number + 1 }}</h1>
+      <h1>{{ number >= 10 ? "牛逼" : "low" }}</h1>
+      <h1>
+        {{
+          msg
+            .split("")
+            .reverse()
+            .join("")
+        }}
+      </h1>
+
+      <!-- 插值  文本-->
+      <h1 v-once>{{ msg }}</h1>
+
+      <!-- 插值  原始 html  v-html 慎用 
+        可能会产生 xss 攻击
+      -->
+      <h1>{{ str }}</h1>
+      <h1 v-html="str"></h1>
+
+      <!-- 插值 特性
+        数据除了可以绑定在标签的内部。也可以绑定在标签的属性上面。
+        v-bind:xxx="xxx"  (***)
+        简写
+          v-bind:xxxx="yyyy" => :xxxx="yyyy"
+      -->
+      <h1 v-bind:title="msg">我是一个普通的h1</h1>
+      <h1 :title="msg">我是一个普通的h1</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          number: 10,
+          msg: "hello vue",
+          str: "<button>点我</button>"
+        }
+      });
+    </script>
+  </body>
+</html>

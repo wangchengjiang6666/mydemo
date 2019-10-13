@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .box {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+        指令：
+        1. v-once   只绑定一次
+        2. v-html   将数据解析为 html
+        3. v-bind   将数据与标签的属性绑定起来
+       -->
+
+      <!-- v-if 控制元素的显示隐藏 -->
+      <p v-if="isShow">我的天</p>
+      <!-- v-else -->
+      <p v-if="isShow">天</p>
+      <p v-else>地</p>
+      <!-- v-else-if -->
+
+      <!-- v-if v-else v-else-if 必须填在一起用，不能分割 -->
+      <p v-if="fenshu >= 90">优秀</p>
+      <p v-else-if="fenshu >= 80">良好</p>
+      <p v-else-if="fenshu >= 60">及格</p>
+      <p v-else>差</p>
+
+      <!-- template 自定义标签    vue内置的标签  v-if 可以结合 template 使用-->
+
+      <hr />
+
+      <div class="box">
+        <!-- isWai 为true 显示 天、地。否则显示 ren -->
+        <template v-if="isWai">
+          <p>天</p>
+          <p>地</p>
+          <p>jinqian</p>
+          <p>房子</p>
+          <p>颜值</p>
+          <p>车子</p>
+        </template>
+
+        <p v-if="!isWai">人</p>
+      </div>
+
+      <!-- v-show 控制元素的显示隐藏-->
+      <p v-show="isShow">我是 v-show 的元素</p>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          msg: "hello",
+          isShow: true,
+          isWai: true,
+          fenshu: 80
+        }
+      });
+    </script>
+  </body>
+</html>

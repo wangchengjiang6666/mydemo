@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // v-model 其实是一个语法糖。。。
+      // 它的真实写法是如下这样
+      // <input type="text" v-model="msg" />
+
+      // <input type="text" :value="msg" @input="fn1" />
+      // fn1(e) {
+      //       this.msg = e.target.value;
+      //     }
+
+      Vue.component("hello", {
+        props: {
+          value: String
+        },
+        template: `
+          <div>
+            <input type="text" :value="value" @input="$emit('input', $event.target.value)" />
+          </div>
+        `
+
+        // methods: {
+        //   fn1(e) {
+        //     // 触发一个自定义事件
+        //     this.$emit("input", e.target.value);
+        //   }
+        // }
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          msg: "hello"
+        },
+
+        // template: `
+        //   <div id="app">
+        //     <h1>{{ msg }}</h1>
+        //     <hello :value="msg" @input="msg = $event"></hello>
+
+        //   </div>
+        // `
+
+        template: `
+          <div id="app">
+            <hello v-model="msg"></hello>
+
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

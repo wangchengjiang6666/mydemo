@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 插值的表达式 -->
+      {{ msg }}
+    </div>
+
+    {{ msg }}
+
+    <script src="./js/vue.js"></script>
+    <script>
+      let vm = new Vue({
+        // el  挂载点  那个div内的东西，由我当前这个vue 实例来控制
+        el: "#app",
+        // data 数据
+        data: {
+          msg: "hello vue"
+        }
+      });
+      // 可以在js中获取 msg 的值，有两种方式
+      // 1. vm.msg        这种方式一般来说是不能获取到的，但是在vue中，vue底层帮我们实现了数据的代理。
+      // 2. vm.$data.msg
+    </script>
+  </body>
+</html>

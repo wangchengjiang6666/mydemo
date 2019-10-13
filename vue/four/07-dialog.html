@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <style>
+      .my-dialog {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        border: 1px solid #000;
+      }
+
+      .my-dialog header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+      }
+
+      .my-dialog header span {
+        cursor: pointer;
+      }
+
+      .my-dialog footer {
+        display: flex;
+        justify-content: flex-end;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      // 创建一个 dialog 的组件
+      // 1. 这个组件有个 prop 来控制他的显示与隐藏  visible
+      Vue.component("myDialog", {
+        props: {
+          visible: {
+            type: Boolean,
+            default: false
+          }
+        },
+
+        template: `
+          <div class="my-dialog" v-if="visible">
+            <header>
+              <h2>标题</h2>
+              <span @click="closeMe">X</span>
+            </header>
+
+            <section>
+              你被捕了
+            </section>
+
+            <footer>
+              <button>取消</button>
+              <button>确定</button>
+            </footer>
+          </div>
+        `,
+
+        methods: {
+          closeMe() {
+            // 组件自身关闭这个组件
+            // this.visible = false; // ×，不能修改 props 的数据
+            this.$emit("abc");
+          }
+        }
+      });
+
+      let vm = new Vue({
+        el: "#app",
+
+        data: {
+          dialogVisible: false
+        },
+
+        template: `
+          <div id="app">
+            <button @click="open">{{ dialogVisible ? '关闭' : '打开' }} dialog</button>
+
+            <myDialog :visible="dialogVisible" @abc="handleClose"></myDialog>
+            
+          </div>
+        `,
+        methods: {
+          open() {
+            this.dialogVisible = !this.dialogVisible;
+          },
+
+          handleClose() {
+            this.dialogVisible = false;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
