@@ -1,0 +1,26 @@
+<!-- 前端的页面 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 通过js代码 -->
+    <script>
+      // 1. 连接到服务
+      let ws = new WebSocket("ws://127.0.0.1:3000");
+
+      // 2. 客户端需要监听 message 事件来接收服务端主动发送过来的消息
+      ws.onmessage = function(event) {
+        console.log(event);
+        // event.data 就是消息体
+
+        // 客户端接收到消息之后，又主动给服务端回一个消息
+        ws.send("恩，是的，我来了");
+      };
+    </script>
+  </body>
+</html>

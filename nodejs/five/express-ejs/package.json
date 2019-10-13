@@ -1,0 +1,16 @@
+{
+  "name": "express-ejs",
+  "version": "1.0.0",
+  "description": "1. 前端渲染 数据是通过前端发送 ajax 请求之后，修改页面的表现。 前后端分离形式\r 2. 后端渲染 数据是通过后端直接渲染在页面上的， 前后端不分离的形式",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}

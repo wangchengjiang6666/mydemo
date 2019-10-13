@@ -1,0 +1,56 @@
+<!-- 这个页面用来模拟发送请求 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>学生列表</div>
+
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+        </tr>
+      </thead>
+      <tbody id="myBody"></tbody>
+    </table>
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(function() {
+        // 请求学生列表
+        $.get("http://localhost:3000/getStudent", function(res) {
+          console.log(res);
+          if (res.code === 0) {
+            var data = res.data; //[]
+
+            let str = "";
+            data.forEach(item => {
+              str += `
+                <tr>
+                  <td>${item.id}</td>
+                  <td>${item.name}</td>  
+                  <td>${item.age}</td>
+                </tr>
+              `;
+            });
+
+            $("#myBody").append(str);
+          } else {
+            alert(res.msg);
+          }
+        });
+      });
+
+      // live-server 是一个 nodejs 工具模块，它能快速的帮我们将某个文件夹作为web服务的根目录文件夹。并且以 localhost:8080 端口监听
+      // 1. 全局安装  npm install -g live-server
+      // 2. 将某个文件夹 下面，使用 live-server 这个命令即可
+    </script>
+  </body>
+</html>

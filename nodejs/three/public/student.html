@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .myPage {
+        display: flex;
+      }
+
+      .myPage li {
+        list-style: none;
+        padding: 0 10px;
+        border: 1px solid #000;
+        cursor: pointer;
+      }
+
+      .myPage li.active {
+        border-color: green;
+        color: green;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>学生列表</h1>
+
+    <ul class="myPage">
+      <!-- <li>Prev</li>
+      <li class="active">1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>Next</li> -->
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="myBody">
+        <!-- <tr>
+          <td>1</td>
+          <td>李威</td>
+          <td>10</td>
+          <td>男</td>
+          <td>
+            <button>修改</button>
+            <button>删除</button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./js/student.js"></script>
+  </body>
+</html>

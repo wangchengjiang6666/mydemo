@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include('./common.ejs'); %>
+
+    <h1>我是一个 ejs 的模板页面</h1>
+
+    <p>我的名字是：<%= name %></p>
+
+    <p><%- str %></p>
+
+    <% if (name) { %>
+    <button>退出登录</button>
+    <% } else { %>
+    <button>登录</button>
+    <% } %>
+
+    <ul>
+      <% for (var i = 0; i < list.length; i++) { %>
+      <li><%= list[i] %></li>
+      <% } %>
+    </ul>
+  </body>
+</html>
